@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <!-- QUALYS ASSET DATA REPORT DTD -->
+    <!-- $Revision$ -->
+    <xsd:element name="ASSET_DATA_REPORT">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element ref="ERROR"/>
+                <xsd:sequence>
+                    <xsd:element ref="HEADER"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="RISK_SCORE_PER_HOST"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="HOST_LIST"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="GLOSSARY"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="APPENDICES"/>
+                </xsd:sequence>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ERROR">
+        <xsd:complexType mixed="true">
+            <xsd:attribute name="number" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <!-- HEADER -->
+    <xsd:element name="HEADER">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="COMPANY"/>
+                <xsd:element ref="USERNAME"/>
+                <xsd:element ref="GENERATION_DATETIME"/>
+                <xsd:element ref="TEMPLATE"/>
+                <xsd:element ref="TARGET"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="RISK_SCORE_SUMMARY"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="COMPANY" type="xsd:string"/>
+    <xsd:element name="USERNAME" type="xsd:string"/>
+    <xsd:element name="GENERATION_DATETIME" type="xsd:string"/>
+    <xsd:element name="TEMPLATE" type="xsd:string"/>
+    <xsd:element name="TARGET">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="USER_ASSET_GROUPS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="USER_IP_LIST"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="COMBINED_IP_LIST"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="ASSET_TAG_LIST"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="USER_ASSET_GROUPS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="ASSET_GROUP_TITLE"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ASSET_GROUP_TITLE" type="xsd:string"/>
+    <xsd:element name="USER_IP_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="RANGE"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="RANGE">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="START"/>
+                <xsd:element ref="END"/>
+            </xsd:sequence>
+            <xsd:attribute name="network_id" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="START" type="xsd:string"/>
+    <xsd:element name="END" type="xsd:string"/>
+    <xsd:element name="COMBINED_IP_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="RANGE"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ASSET_TAG_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="INCLUDED_TAGS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="EXCLUDED_TAGS"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="INCLUDED_TAGS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ASSET_TAG"/>
+            </xsd:sequence>
+            <xsd:attribute name="scope" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="EXCLUDED_TAGS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="ASSET_TAG"/>
+            </xsd:sequence>
+            <xsd:attribute name="scope" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <!-- AVERAGE RISK_SCORE_SUMMARY -->
+    <xsd:element name="RISK_SCORE_SUMMARY">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="TOTAL_VULNERABILITIES"/>
+                <xsd:element ref="AVG_SECURITY_RISK"/>
+                <xsd:element ref="BUSINESS_RISK"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="TOTAL_VULNERABILITIES" type="xsd:string"/>
+    <xsd:element name="AVG_SECURITY_RISK" type="xsd:string"/>
+    <xsd:element name="BUSINESS_RISK" type="xsd:string"/>
+    <!-- RISK_SCORE_PER_HOST -->
+    <xsd:element name="RISK_SCORE_PER_HOST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="HOSTS"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="HOSTS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="IP_ADDRESS"/>
+                <xsd:element ref="TOTAL_VULNERABILITIES"/>
+                <xsd:element ref="SECURITY_RISK"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="IP_ADDRESS">
+        <xsd:complexType mixed="true">
+            <xsd:attribute name="network_id" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="SECURITY_RISK" type="xsd:string"/>
+    <!-- HOST_LIST -->
+    <xsd:element name="HOST_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="HOST"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="HOST">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element ref="ERROR"/>
+                <xsd:sequence>
+                    <xsd:element ref="IP"/>
+                    <xsd:element ref="TRACKING_METHOD"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="ASSET_TAGS"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="DNS"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="NETBIOS"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="OPERATING_SYSTEM"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="OS_CPE"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="ASSET_GROUPS"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" ref="VULN_INFO_LIST"/>
+                </xsd:sequence>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="IP">
+        <xsd:complexType mixed="true">
+            <xsd:attribute name="network_id" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="TRACKING_METHOD" type="xsd:string"/>
+    <xsd:element name="ASSET_TAGS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="ASSET_TAG"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ASSET_TAG" type="xsd:string"/>
+    <xsd:element name="DNS" type="xsd:string"/>
+    <xsd:element name="NETBIOS" type="xsd:string"/>
+    <xsd:element name="OPERATING_SYSTEM" type="xsd:string"/>
+    <xsd:element name="OS_CPE" type="xsd:string"/>
+    <xsd:element name="ASSET_GROUPS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="ASSET_GROUP_TITLE"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="VULN_INFO_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="VULN_INFO"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="VULN_INFO">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="QID"/>
+                <xsd:element ref="TYPE"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="PORT"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="SERVICE"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="FQDN"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="PROTOCOL"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="SSL"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="INSTANCE"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="RESULT"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="FIRST_FOUND"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="LAST_FOUND"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="TIMES_FOUND"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="VULN_STATUS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="CVSS_FINAL"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="TICKET_NUMBER"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="TICKET_STATE"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="QID">
+        <xsd:complexType mixed="true">
+            <xsd:attribute name="id" type="xsd:IDREF" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="TYPE" type="xsd:string"/>
+    <xsd:element name="PORT" type="xsd:string"/>
+    <xsd:element name="SERVICE" type="xsd:string"/>
+    <xsd:element name="FQDN" type="xsd:string"/>
+    <xsd:element name="PROTOCOL" type="xsd:string"/>
+    <xsd:element name="SSL" type="xsd:string"/>
+    <xsd:element name="RESULT">
+        <xsd:complexType mixed="true">
+            <xsd:attribute name="format" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="FIRST_FOUND" type="xsd:string"/>
+    <xsd:element name="LAST_FOUND" type="xsd:string"/>
+    <xsd:element name="TIMES_FOUND" type="xsd:string"/>
+    <!-- Note: VULN_STATUS is N/A for IGs -->
+    <xsd:element name="VULN_STATUS" type="xsd:string"/>
+    <xsd:element name="CVSS_FINAL" type="xsd:string"/>
+    <xsd:element name="TICKET_NUMBER" type="xsd:string"/>
+    <xsd:element name="TICKET_STATE" type="xsd:string"/>
+    <xsd:element name="INSTANCE" type="xsd:string"/>
+    <!-- GLOSSARY -->
+    <xsd:element name="GLOSSARY">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="VULN_DETAILS_LIST"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="VULN_DETAILS_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="VULN_DETAILS"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="VULN_DETAILS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="QID"/>
+                <xsd:element ref="TITLE"/>
+                <xsd:element ref="SEVERITY"/>
+                <xsd:element ref="CATEGORY"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="CUSTOMIZED"/>
+                <xsd:element ref="THREAT"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="THREAT_COMMENT"/>
+                <xsd:element ref="IMPACT"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="IMPACT_COMMENT"/>
+                <xsd:element ref="SOLUTION"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="SOLUTION_COMMENT"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="COMPLIANCE"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="CORRELATION"/>
+                <xsd:element ref="PCI_FLAG"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="LAST_UPDATE"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="CVSS_SCORE"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="VENDOR_REFERENCE_LIST"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="CVE_ID_LIST"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="BUGTRAQ_ID_LIST"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:ID" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="TITLE" type="xsd:string"/>
+    <xsd:element name="SEVERITY" type="xsd:string"/>
+    <xsd:element name="CATEGORY" type="xsd:string"/>
+    <xsd:element name="CUSTOMIZED">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="DISABLED"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="CUSTOM_SEVERITY"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="DISABLED" type="xsd:string"/>
+    <xsd:element name="CUSTOM_SEVERITY" type="xsd:string"/>
+    <xsd:element name="THREAT" type="xsd:string"/>
+    <xsd:element name="THREAT_COMMENT" type="xsd:string"/>
+    <xsd:element name="IMPACT" type="xsd:string"/>
+    <xsd:element name="IMPACT_COMMENT" type="xsd:string"/>
+    <xsd:element name="SOLUTION" type="xsd:string"/>
+    <xsd:element name="SOLUTION_COMMENT" type="xsd:string"/>
+    <xsd:element name="PCI_FLAG" type="xsd:string"/>
+    <xsd:element name="CORRELATION">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="EXPLOITABILITY"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="MALWARE"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="EXPLOITABILITY">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="EXPLT_SRC"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="EXPLT_SRC">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="SRC_NAME"/>
+                <xsd:element ref="EXPLT_LIST"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="SRC_NAME" type="xsd:string"/>
+    <xsd:element name="EXPLT_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="EXPLT"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="EXPLT">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="REF"/>
+                <xsd:element ref="DESC"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="LINK"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="REF" type="xsd:string"/>
+    <xsd:element name="DESC" type="xsd:string"/>
+    <xsd:element name="LINK" type="xsd:string"/>
+    <xsd:element name="MALWARE">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="MW_SRC"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="MW_SRC">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="SRC_NAME"/>
+                <xsd:element ref="MW_LIST"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="MW_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="MW_INFO"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="MW_INFO">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="MW_ID"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="MW_TYPE"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="MW_PLATFORM"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="MW_ALIAS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="MW_RATING"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="MW_LINK"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="MW_ID" type="xsd:string"/>
+    <xsd:element name="MW_TYPE" type="xsd:string"/>
+    <xsd:element name="MW_PLATFORM" type="xsd:string"/>
+    <xsd:element name="MW_ALIAS" type="xsd:string"/>
+    <xsd:element name="MW_RATING" type="xsd:string"/>
+    <xsd:element name="MW_LINK" type="xsd:string"/>
+    <xsd:element name="LAST_UPDATE" type="xsd:string"/>
+    <xsd:element name="CVSS_SCORE">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="CVSS_BASE"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="CVSS_TEMPORAL"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="CVSS_BASE">
+        <xsd:complexType mixed="true">
+            <xsd:attribute name="source" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="CVSS_TEMPORAL" type="xsd:string"/>
+    <xsd:element name="VENDOR_REFERENCE_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="VENDOR_REFERENCE"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="VENDOR_REFERENCE">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="ID"/>
+                <xsd:element ref="URL"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="ID" type="xsd:string"/>
+    <xsd:element name="URL" type="xsd:string"/>
+    <xsd:element name="CVE_ID_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="CVE_ID"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="CVE_ID">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="ID"/>
+                <xsd:element ref="URL"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="BUGTRAQ_ID_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="BUGTRAQ_ID"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="BUGTRAQ_ID">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="ID"/>
+                <xsd:element ref="URL"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="COMPLIANCE">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="1" ref="COMPLIANCE_INFO"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="COMPLIANCE_INFO">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="COMPLIANCE_TYPE"/>
+                <xsd:element ref="COMPLIANCE_SECTION"/>
+                <xsd:element ref="COMPLIANCE_DESCRIPTION"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="COMPLIANCE_TYPE" type="xsd:string"/>
+    <xsd:element name="COMPLIANCE_SECTION" type="xsd:string"/>
+    <xsd:element name="COMPLIANCE_DESCRIPTION" type="xsd:string"/>
+    <!-- APPENDICES -->
+    <xsd:element name="APPENDICES">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="NO_RESULTS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="NO_VULNS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="TEMPLATE_DETAILS"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="NO_RESULTS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="IP_LIST"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="IP_LIST">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="unbounded" minOccurs="0" ref="RANGE"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="NO_VULNS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="IP_LIST"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="TEMPLATE_DETAILS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="VULN_LISTS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="SELECTIVE_VULNS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="EXCLUDED_VULN_LISTS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="EXCLUDED_VULNS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="RESULTING_VULNS"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="FILTER_SUMMARY"/>
+                <xsd:element maxOccurs="1" minOccurs="0" ref="EXCLUDED_CATEGORIES"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="VULN_LISTS" type="xsd:string"/>
+    <xsd:element name="SELECTIVE_VULNS" type="xsd:string"/>
+    <xsd:element name="EXCLUDED_VULN_LISTS" type="xsd:string"/>
+    <xsd:element name="EXCLUDED_VULNS" type="xsd:string"/>
+    <xsd:element name="RESULTING_VULNS" type="xsd:string"/>
+    <xsd:element name="FILTER_SUMMARY" type="xsd:string"/>
+    <xsd:element name="EXCLUDED_CATEGORIES" type="xsd:string"/>
+</xsd:schema>
